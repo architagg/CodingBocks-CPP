@@ -1,74 +1,44 @@
-#include<iostream>
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-
-
 int main() {
-	int n,m , res[1000];
-	cin>>n;
-	int a[n];
-	for(int i=0;i<n;i++){
-		cin>>a[i];
-	}
-	cin>>m;
-	int b[m];
-	for(int i=0;i<m;i++){
-		cin>>b[i];
-	}
-	int n1 = 0 , n2 = 0;
-	// Calculating 1st Digit
-	for(int i =0; i <n ; i++){
-			n1 = n1 +((pow(10,n-i) * a[i])) ;
-		}
-	n1 = 	n1/10;
-	//cout<<n1<<endl;
-	
-	//Calculating 2nd digit
-	for(int i =0; i <m ; i++){
-			n2 = n2 +((pow(10,m-i) * b[i])) ;
-		}
-	n2 = n2/10;
-	//cout<<n2<<endl;
-	
-	int sum = n1+n2;
-	//cout<<sum<<endl; ;
-	
-	//Counting Digits in Sum
-	int count = 0 ;
-	int temp =sum;
-	while(temp!=0){
-	    temp = temp/10;
-	    count++;
-	}
-	//cout<<count<<endl;
-	
-
-	     while (sum != 0) {
-	   for(int i = 0 ; i < count ; i++){
-	         int r = sum % 10;
-	         res[i] = r;
-	         sum = sum / 10;
+    int N,M;
+    cin>>N;
+    int A[N];
+    for(int i=0;i<N;i++)
+        cin>>A[i];
+    cin>>M;
+    int B[M];
+    for(int i=0;i<M;i++)
+        cin>>B[i];
+    int carry=0;
+    vector<int> ans;
+    int i,j;
+    for(i=N-1,j=M-1;i>=0 && j>=0;i--,j--)   ///Start a loop from units place digits
+    {
+        int sum=A[i]+B[j]+carry;
+        ans.push_back(sum%10);
+        carry=sum/10;
     }
-	}
-
-	     
-	if(count <= n && count <= m ){
-	    int zero = 0;
-	    cout<< zero << ", ";
-	    for(int i = count-1 ;i>=0;i--){
-	        cout<<res[i]<<", ";
-	        
-	    }
-	}
-	else{
-	     for(int i = count-1 ;i>=0;i--){
-	    cout<<res[i]<<", ";
-	}
-	}
-	
-
-	cout <<"END";
-	
+    while(i>=0)
+    {
+        int sum=carry+A[i];
+        ans.push_back(sum%10);
+        carry=sum/10;
+        i--;
+    }
+    while(j>=0)
+    {
+        int sum=carry+B[j];
+        ans.push_back(sum%10);
+        carry=sum/10;
+        j--;
+    }
+    if(carry)
+        ans.push_back(carry);
+    
+    for(int i=ans.size()-1;i>=0;i--)
+        cout<<ans[i]<<", ";
+    cout<<"END";
 	return 0;
 }
