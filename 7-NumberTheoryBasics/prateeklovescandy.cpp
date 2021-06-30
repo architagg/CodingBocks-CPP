@@ -1,46 +1,51 @@
 #include <iostream>
 using namespace std;
+#define ll long long
+long long a[1000000];
 
- int p[10000055]={0};
 
-void prime_seive()
-{
- for(int i=3;i<=10000005;i+=2)
-    {
-        p[i]=1;
+
+void primeSieve(ll *p,ll n){
+
+    p[0] = p[1] = 0;
+    p[2] = 1;
+    for(ll i=3;i<=n;i+=2){
+        p[i] = 1;
     }
-    for(int i=3;i*i<=10000005;i+=2)
-    {
-        if(p[i]==1)
-        {
-            for(int j=i*i;j<=10000005;j+=i)
-            {
-                p[j]=0;
+    for(ll i=3;i<=n;i+=2){
+        
+        if(p[i]){
+            for(ll j=i*i;j<=n;j+=2*i){
+                p[j] = 0;
             }
         }
+
     }
-    p[2]=1;
-    p[1]=p[0]=0;
-}
-int main() {
-	int t;
-	cin>>t;
-	while(t--){
-    int n;
-    cin>>n;
-   
-    prime_seive();
-    int count=0,i=2;
-    while(count<n)
-    {
-        if((p[i]==1))
-        {
-            count++;
+    int k=0;
+    for(int i=2;i<1000000;++i){
+        if(p[i]){
+            a[k]=i;
+            k++;
         }
-        i++;
     }
-    cout<<i-1<<endl;
-	}
-return 0;
+    return;
+}
+
+
+
+
+int main() {
+    ll N = 1000001;
+    ll p[N] = {0};
+    primeSieve(p,N-1);
+    int t;
+    ll n;
+    cin>>t;
+    while(t--)
+    {
+        cin>>n;
+        cout<<a[n-1]<<endl;
+        
+    }
 
 }
